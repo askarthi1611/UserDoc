@@ -1,0 +1,98 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~node_modules/primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~node_modules/primeicons/primeicons.css";
+
+body {
+  margin: 0;
+}
+::-webkit-scrollbar {
+  height: 5px;
+  border-radius: 20px;
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+.sidebar_container {
+  width: 40px;
+  position: fixed;
+  background-color: #3544e2;
+  height: 100vh;
+}
+.headerbar {
+  height: 50px;
+  left: 40px;
+  position: fixed;
+  background-color: bisque;
+  width: 100vw;
+}
+.main_container {
+  position: fixed;
+  margin-top: 60px;
+  padding: 5px;
+  background-color: #f5f5f5;
+  overflow: auto;
+  width: calc(100vw - 40px);
+  height: calc(100vh - 50px);
+  left: 40px;
+}
+.table_btn {
+  min-width: 100px;
+}
+.action_td {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+.action_td .p-button.p-button-icon-only {
+  width: -moz-fit-content;
+  background: #ffffff;
+  border: 1px solid #000000;
+  width: fit-content;
+  padding: 2px 5px;
+}
+.last_td {
+  background-color: #fff;
+  position: sticky;
+  right: 0;
+  z-index: 999;
+}
+.routeBtn {
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: fixed;
+  top: 6px;
+  right: 5px;
+  background: azure;
+  z-index: 999;
+  color: #030303;
+}
+.pageHead{
+  font-size: 24px;
+  color: #333; /* Change color as needed */
+  margin-bottom: 10px; /* Adjust spacing as needed */
+  text-transform: uppercase; /* Convert text to uppercase */
+}
+/* Target the edit icon */
+button .pi-pencil {
+  color: #28a745; /* Green color for the edit icon */
+}
+/* Target the delete icon */
+button .pi-trash {
+  color: #dc3545; /* Red color for the delete icon */
+}
+
+/* Target the PDF icon */
+button .pi-file-pdf {
+  color: #007bff; /* Blue color for the PDF icon */
+}
+  

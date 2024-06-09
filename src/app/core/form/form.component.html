@@ -1,0 +1,81 @@
+<p-toast />
+<button  pButton class="routeBtn" pTooltip="Go to Table Page"tooltipPosition="left" routerLink="/table"><i class="pi pi-table" ></i></button>
+<h1 class="pageHead">User Create Form</h1>
+
+<!-- Form for creating a new user -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+  <!-- Name input field -->
+  <div class="form-group">
+    <input
+      type="text"
+      formControlName="name"
+      placeholder="Name"
+      class="form-control"
+      (keyup)="name.markAsTouched()"
+    />
+    <!-- Error messages for name input -->
+    <div
+      *ngIf="name.invalid && (name.dirty || name.touched)"
+      class="error-message"
+    >
+      <div *ngIf="name.errors?.required">Name is required.</div>
+      <div *ngIf="name.errors?.minlength">
+        Name must be at least 3 characters long.
+      </div>
+    </div>
+  </div>
+  <!-- Email input field -->
+  <div class="form-group">
+    <input
+      type="email"
+      formControlName="email"
+      placeholder="Email"
+      class="form-control"
+      (keyup)="email.markAsTouched()"
+    />
+    <!-- Error messages for email input -->
+    <div
+      *ngIf="email.invalid && (email.dirty || email.touched)"
+      class="error-message"
+    >
+      <div *ngIf="email.errors?.required">Email is required.</div>
+      <div *ngIf="email.errors?.email">Invalid email format.</div>
+    </div>
+  </div>
+  <!-- Mobile number input field -->
+  <div class="form-group">
+    <input
+      type="text"
+      formControlName="mobileNumber"
+      placeholder="Phone Number"
+      class="form-control"
+      (keyup)="mobileNumber.markAsTouched()"
+    />
+    <!-- Error messages for mobile number input -->
+    <div
+      *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)"
+      class="error-message"
+    >
+      <div *ngIf="mobileNumber.errors?.required">Phone Number is required.</div>
+    </div>
+  </div>
+  <!-- Address input field -->
+  <div class="form-group">
+    <input
+      type="text"
+      formControlName="address"
+      placeholder="Address"
+      class="form-control"
+      (keyup)="address.markAsTouched()"
+    />
+    <!-- Error messages for address input -->
+    <div
+      *ngIf="address.invalid && (address.dirty || address.touched)"
+      class="error-message"
+    >
+      <div *ngIf="address.errors?.required">Address is required.</div>
+    </div>
+  </div>
+  <!-- Submit button -->
+  <button type="submit" class="submit-btn">Submit</button>
+</form>

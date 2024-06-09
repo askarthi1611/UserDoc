@@ -1,0 +1,54 @@
+.sidebar-header {
+  text-align: center; /* Align the header text to the center */
+  margin-bottom: 20px; /* Add some margin at the bottom of the header */
+}
+
+.sidebar-header h3 {
+  color: #fff;
+
+  text-align: center;
+  background: black;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-bottom: 2px solid #2e7d32;
+  padding: 8px;
+}
+
+.sidebar-nav ul {
+  list-style-type: none; /* Remove default list styles */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.sidebar-nav ul li {
+  margin-bottom: 10px; /* Add some margin at the bottom of each list item */
+}
+
+.sidebar-nav ul li a {
+  display: block; /* Make the anchor tag a block-level element */
+  padding: 5px; /* Add padding to the anchor tag */
+  background-color: #a9a9a9;
+  text-align: center;
+  color: #c8c8c8;
+  text-decoration: none; /* Remove underline from anchor text */
+  transition: background-color 0.3s; /* Add smooth transition for background color */
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.sidebar-nav ul li a:hover {
+  background-color: #555; /* Change background color on hover */
+  color: #6ac6f8;
+}
+
+.active {
+  background-color: #555; /* Set background color for active link */
+  color: #6ac6f8;
+}
+.sidebar-nav ul li a.active-link {
+  background-color: #555; /* Set background color for active link */
+  color: #6ac6f8;
+}

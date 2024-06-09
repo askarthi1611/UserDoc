@@ -1,0 +1,11 @@
+/* Style for the header bar */
+.header-bar {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    text-align: center; /* Center-align text */
+    padding: 10px; /* Add some padding */
+    font-size: 24px; /* Larger font size */
+    border-bottom: 2px solid #2E7D32; /* Darker green border at the bottom */
+    margin-bottom: 20px; /* Add some margin at the bottom */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
