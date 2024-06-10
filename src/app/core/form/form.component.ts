@@ -10,10 +10,13 @@ import { MessageService } from 'primeng/api';
 })
 export class FormComponent implements OnInit {
   form: FormGroup | any;
-
+  loading:any=true;
   constructor(private fb: FormBuilder, public userform: FormService, private messageService: MessageService) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.loading=false
+    }, 1000);
     // Initialize the form with form controls and validation rules
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],

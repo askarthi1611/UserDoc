@@ -6,8 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TableService {
-  private apiUrl = 'http://localhost:3000/api/users';
-  private pdfUrl = 'http://localhost:3000/api/pdf';
+  
+ private apiUrl = 'http://localhost:3000/api/users';
+  //  private apiUrl = 'https://userdoc-backend.onrender.com/api/users';
+ private pdfUrl = 'http://localhost:3000/api/pdf';
+  //  private pdfUrl = 'https://userdoc-backend.onrender.com/api/pdf';
 
   constructor(private http: HttpClient) {}
 

@@ -9,3 +9,8 @@
     margin-bottom: 20px; /* Add some margin at the bottom */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   }
+  @media screen and (max-width:500px) {
+    .header-bar{
+      text-align: left !important;
+    }
+  }

@@ -67,25 +67,33 @@ export class TableComponent implements OnInit {
   async showallpdfdisplayDialog(): Promise<void> {
     this.pdfdisplay = true;
     try {
+      this.loading = true;
+
       const response = await this.userService.generatePdfalluser(); // Call service method to generate PDF for all users
       this.pdfdetails = {
         pdfBase64: { data: response, user: 'All User List' }, // Set PDF details
       };
-      this.messageService.add({ // Display success message
+      this.messageService.add({
+        // Display success message
         severity: 'success',
         summary: 'Success',
         detail: 'Successfully generated PDF',
       });
-    } catch (error) { // Handle errors
-      this.messageService.add({ // Display error message
+      this.loading = false;
+    } catch (error) {
+      // Handle errors
+      this.messageService.add({
+        // Display error message
         severity: 'error',
         summary: 'Error',
         detail: 'Failed to generate PDF',
       });
+      this.loading = false;
+
       console.error('Failed to generate PDF:', error); // Log error to console
     }
   }
-  
+
   // Method to download the generated PDF
   downloadPDF(): void {
     const linkSource = this.pdfdetails.pdfBase64.data;
@@ -101,19 +109,27 @@ export class TableComponent implements OnInit {
   confirmDelete(id: string): void {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this item?', // Confirmation message
-      accept: () => { // Handle acceptance
-        this.userService.deleteUser(id).subscribe( // Call service method to delete user
-          () => { // Success callback
-            this.messageService.add({ // Display success message
+      accept: () => {
+        // Handle acceptance
+        this.userService.deleteUser(id).subscribe(
+          // Call service method to delete user
+          () => {
+            // Success callback
+            this.messageService.add({
+              // Display success message
               severity: 'success',
               summary: 'Success',
               detail: 'Item deleted successfully',
               life: 1000,
             });
+            this.loading = true;
+
             this.loadUsers(); // Reload user data
           },
-          () => { // Error callback
-            this.messageService.add({ // Display error message
+          () => {
+            // Error callback
+            this.messageService.add({
+              // Display error message
               severity: 'error',
               summary: 'Error',
               detail: 'Failed to delete item',
@@ -122,8 +138,10 @@ export class TableComponent implements OnInit {
           }
         );
       },
-      reject: () => { // Handle rejection
-        this.messageService.add({ // Display info message
+      reject: () => {
+        // Handle rejection
+        this.messageService.add({
+          // Display info message
           severity: 'info',
           summary: 'Rejected',
           detail: 'You have rejected',
@@ -135,42 +153,55 @@ export class TableComponent implements OnInit {
 
   // Method to generate PDF for a specific user
   generatePDF(user: any): void {
+    this.loading = true;
+
     this.userService.generatePdf(user).subscribe(
       (response) => {
         this.pdfdetails = response; // Set PDF details
-        this.messageService.add({ // Display success message
+        this.messageService.add({
+          // Display success message
           severity: 'success',
           summary: 'Success',
           detail: 'Successfully generated PDF',
         });
+        this.loading = false;
       },
-      () => { // Error callback
-        this.messageService.add({ // Display error message
+      () => {
+        // Error callback
+        this.messageService.add({
+          // Display error message
           severity: 'error',
           summary: 'Error',
           detail: 'Failed to generate PDF',
         });
+        this.loading = false;
       }
     );
   }
 
   // Method to handle user update
   onUpdate(): void {
-    if (this.form.valid && this.userIdToUpdate) { // Check if form is valid and user ID to update is available
+    if (this.form.valid && this.userIdToUpdate) {
+      // Check if form is valid and user ID to update is available
       const data = { ...this.form.value, _id: this.userIdToUpdate }; // Prepare data for update
-      this.userService.updateUser(data).subscribe( // Call service method to update user
-        () => { // Success callback
+      this.userService.updateUser(data).subscribe(
+        // Call service method to update user
+        () => {
+          // Success callback
           this.resetForm(); // Reset form
           this.displayDialog = false; // Close dialog
           this.loadUsers(); // Reload user data
-          this.messageService.add({ // Display success message
+          this.messageService.add({
+            // Display success message
             severity: 'success',
             summary: 'Success',
             detail: 'User updated successfully',
           });
         },
-        () => { // Error callback
-          this.messageService.add({ // Display error message
+        () => {
+          // Error callback
+          this.messageService.add({
+            // Display error message
             severity: 'error',
             summary: 'Error',
             detail: 'Failed to update user',
@@ -221,8 +252,10 @@ export class TableComponent implements OnInit {
   // Method to filter users based on search term
   tableSearch(event: Event): void {
     const searchTerm = (event.target as HTMLInputElement).value.toLowerCase(); // Get the search term entered by the user
-    this.users = this.users.filter((user) => // Filter users based on the search term
-      user.name.toLowerCase().includes(searchTerm) // Check if user's name includes the search term
+    this.users = this.users.filter(
+      (
+        user // Filter users based on the search term
+      ) => user.name.toLowerCase().includes(searchTerm) // Check if user's name includes the search term
     );
   }
 
@@ -233,5 +266,4 @@ export class TableComponent implements OnInit {
     this.form.patchValue(user); // Patch the form with the user's data for editing
     this.updating = true; // Set updating flag to true to indicate editing mode
   }
-
 }
