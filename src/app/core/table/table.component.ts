@@ -9,14 +9,15 @@ import { MessageService, ConfirmationService } from 'primeng/api';
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-  form: FormGroup | any; // Form group for user input
+  form: FormGroup|any; // Form group for user input
   users: any[] = []; // Array to hold user data
   updating: boolean = false; // Flag to indicate if the user is being updated
   userIdToUpdate: string | null = null; // ID of the user being updated
   loading: boolean = true; // Flag to indicate loading state
   displayDialog: boolean = false; // Flag to control display of the edit user dialog
-  pdfdisplay: any = false; // Flag to control display of the PDF dialog
+  pdfdisplay: boolean = false; // Flag to control display of the PDF dialog
   pdfdetails: any = {}; // Object to hold PDF details
+  originalUsers: any[] = []; // Array to hold the original list of users
 
   constructor(
     private fb: FormBuilder, // FormBuilder for creating form groups
@@ -68,28 +69,23 @@ export class TableComponent implements OnInit {
     this.pdfdisplay = true;
     try {
       this.loading = true;
-
       const response = await this.userService.generatePdfalluser(); // Call service method to generate PDF for all users
       this.pdfdetails = {
         pdfBase64: { data: response, user: 'All User List' }, // Set PDF details
       };
       this.messageService.add({
-        // Display success message
         severity: 'success',
         summary: 'Success',
         detail: 'Successfully generated PDF',
       });
       this.loading = false;
     } catch (error) {
-      // Handle errors
       this.messageService.add({
-        // Display error message
         severity: 'error',
         summary: 'Error',
         detail: 'Failed to generate PDF',
       });
       this.loading = false;
-
       console.error('Failed to generate PDF:', error); // Log error to console
     }
   }
@@ -110,26 +106,19 @@ export class TableComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this item?', // Confirmation message
       accept: () => {
-        // Handle acceptance
         this.userService.deleteUser(id).subscribe(
-          // Call service method to delete user
           () => {
-            // Success callback
             this.messageService.add({
-              // Display success message
               severity: 'success',
               summary: 'Success',
               detail: 'Item deleted successfully',
               life: 1000,
             });
             this.loading = true;
-
             this.loadUsers(); // Reload user data
           },
           () => {
-            // Error callback
             this.messageService.add({
-              // Display error message
               severity: 'error',
               summary: 'Error',
               detail: 'Failed to delete item',
@@ -139,9 +128,7 @@ export class TableComponent implements OnInit {
         );
       },
       reject: () => {
-        // Handle rejection
         this.messageService.add({
-          // Display info message
           severity: 'info',
           summary: 'Rejected',
           detail: 'You have rejected',
@@ -154,12 +141,10 @@ export class TableComponent implements OnInit {
   // Method to generate PDF for a specific user
   generatePDF(user: any): void {
     this.loading = true;
-
     this.userService.generatePdf(user).subscribe(
       (response) => {
         this.pdfdetails = response; // Set PDF details
         this.messageService.add({
-          // Display success message
           severity: 'success',
           summary: 'Success',
           detail: 'Successfully generated PDF',
@@ -167,9 +152,7 @@ export class TableComponent implements OnInit {
         this.loading = false;
       },
       () => {
-        // Error callback
         this.messageService.add({
-          // Display error message
           severity: 'error',
           summary: 'Error',
           detail: 'Failed to generate PDF',
@@ -182,26 +165,20 @@ export class TableComponent implements OnInit {
   // Method to handle user update
   onUpdate(): void {
     if (this.form.valid && this.userIdToUpdate) {
-      // Check if form is valid and user ID to update is available
       const data = { ...this.form.value, _id: this.userIdToUpdate }; // Prepare data for update
       this.userService.updateUser(data).subscribe(
-        // Call service method to update user
         () => {
-          // Success callback
           this.resetForm(); // Reset form
           this.displayDialog = false; // Close dialog
           this.loadUsers(); // Reload user data
           this.messageService.add({
-            // Display success message
             severity: 'success',
             summary: 'Success',
             detail: 'User updated successfully',
           });
         },
         () => {
-          // Error callback
           this.messageService.add({
-            // Display error message
             severity: 'error',
             summary: 'Error',
             detail: 'Failed to update user',
@@ -237,6 +214,7 @@ export class TableComponent implements OnInit {
     this.userService.getAllUsers().subscribe({
       next: (response) => {
         this.users = response; // Set user data
+        this.originalUsers = [...this.users]; // Store the original list of users
         this.loading = false; // Disable loading indicator
       },
       error: () => {
@@ -249,14 +227,17 @@ export class TableComponent implements OnInit {
       },
     });
   }
+
   // Method to filter users based on search term
   tableSearch(event: Event): void {
     const searchTerm = (event.target as HTMLInputElement).value.toLowerCase(); // Get the search term entered by the user
-    this.users = this.users.filter(
-      (
-        user // Filter users based on the search term
-      ) => user.name.toLowerCase().includes(searchTerm) // Check if user's name includes the search term
-    );
+    if (searchTerm) {
+      this.users = this.originalUsers.filter((user: any) =>
+        user.name.toLowerCase().includes(searchTerm)
+      );
+    } else {
+      this.users = [...this.originalUsers]; // Restore the original list when search term is cleared
+    }
   }
 
   // Method to open the edit dialog for a specific user

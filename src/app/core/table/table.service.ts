@@ -9,8 +9,10 @@ export class TableService {
   
  private apiUrl = 'http://localhost:3000/api/users';
   //  private apiUrl = 'https://userdoc-backend.onrender.com/api/users';
+    //private apiUrl = 'https://askumb.netlify.app/api/users';
  private pdfUrl = 'http://localhost:3000/api/pdf';
   //  private pdfUrl = 'https://userdoc-backend.onrender.com/api/pdf';
+    //private pdfUrl = 'https://askumb.netlify.app/api/pdf';
 
   constructor(private http: HttpClient) {}
 
